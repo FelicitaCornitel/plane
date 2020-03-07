@@ -1,0 +1,51 @@
+
+In programul meu am implementat:
+7 clase, dintre care una contine main(apelurile metodelor).
+
+Clasa Pasager contine informatiile despre pasager : id - ul si prioritatea(score), ele sunt de tip protected, ca sa fie vizibile doar in subclasele sau in clasele ce mostenesc clasa Pasager. Am folosit protected, deoarece nu oricine poate sa stie aceste date. Aceasta clasa initializeaza un obiect de tip Pasager.
+Am folosit urmatoarele metode:
+getScore()care returneaza prioritatea pasagerului.
+geId() care returneaza id -ul pasagerului.
+CalculateScore() - calculeaza prioritatea pentru fiecare tip de pasager.
+Clasa Pasager este o clasa abstracta, deoarece metoda CalculateScore() calculeaza diferit prioritatea  in fiecare clasa mostenita si este o metoda abstracta.
+
+Clasa Persoana contine informatiile despre persoane adica : numele, varsta, tipul de bilet, tipul de imbarcare si tipul de beneficii. Acestea clasa initializeaza un obiect de tip Persoana.
+
+Clasa Singur initializeaza un obiect de tip Singur, care instantiaza un obiect de tip Persoana.
+In clasa Singur calculez prioritatea.
+
+Clasa Grup contine un vector de tip Persoana, deoarece intr un grup pot sa fie mai multe persoane. Am pus lungimea maxima a vectorului 100, deoarece intr un avion in total nu depaseste de 100 de grupuri, 100 de familii. In aceasta clasa initializez un obiect de tip Grup, care initial are prioritatea 5. Metoda addPersoana, adauga persoana intr un grup pe pozitia size si mareste dimensiunea vectorului.
+
+Clasa Familie contine un vector de tip Persoana, deoarece intr o familie pot sa fie mai multe persoane. Am pus lungimea maxima a vectorului 100, deoarece intr un avion in total nu depaseste de 100 de grupuri, 100 de familii. In aceasta clasa initializez un obiect de tip Familie, care initial are prioritatea 10. Metoda addPersoana, adauga persoana intr o familie pe pozitia size si mareste dimensiunea vectorului.
+
+In clasa Heap este implementata "coada de prioritati", adica MaxHeap. In aceasta clasa am un vector de pasageri. Aceasta clasa initializeaza un obiect de tip Heap si vectorul de pasageri cu un nr de pasageri(maxSize), care va fi preluat in main prin citirea din fisier a primei linii.
+
+Metoda swap interschimba doua noduri.
+
+Metoda isFrunza, verifica daca nodul este frunza sau nu, adica daca mai nu mai are nici un copil.Daca are returneaza false si daca este frunza returneaza true.
+
+Metoda Sort, aranjeaza Heap ul, adica il face sa fie MaxHeap. Metoda are parametru i, acest parametru insemnand nodul. De la inceput retin in variabila left si right fiul stang respectiv fiul drept.  Daca nodul nu este frunza atunci urmeaza sortare, astfel in variabila max retin nodul dat ca parametru si daca pasagerul din stanga are prioritate mai mare decat pasagerul[max](dat ca parametru), atunci el devine max(cel cu prioritatea cea mai mare), respectiv si pentru nodul din dreapta. Daca max nu a ajuns sa fie nodul parinte, atunci apelez metoda swap si mai fac inca odata sortare, iar daca a ajuns sortez arborele mai jos de parinte, daca nu a fost sortat. 
+
+Metoda insert1 este metoda ajutatoare pentru metoda insert.
+Ea primeste ca parametru i, adica nodul. Daca nu am niciun nod ies din metoda si nu mai fac nimic, insemnand ca nu am ce sa inserez. In functie de cate noduri am(i) verific cine e nodul parinte.
+Daca nodul dat ca parametru are prioritatea mai mare ca parintele , le interschimb. Dupa calculez din nou parintele, care devine nodul meu dat ca parametru si verific pentru el cine este parintele. Dupa iar verific prioritatile. Aceasta metoda insert, insereaza nodul dat ca parametru in locul lui potrivit, incepand de la nivelul cel mai de jos, adica de la ultimele noduri.
+
+Metoda insert adauga un pasager in heap,marind dimensiunea vectorului de pasageri si apeland metoda insert1.
+
+Metoda list1 este metoda ajutatoare pentru metoda list. Verific daca nodul dat ca parametru nu este mai mare decat lungimea heap ului meu(vectorului). Daca nu, verific daca este mai mare ca 0, si daca da, afisez id-ul pasagerului parinte si dupa pasagerul din stanga si dreapta.
+Metoda list afiseaza pasagerii in preordine, astfel apelez functia "list1" cu parametru 0, ca sa afiseaza incepand cu pasagerul cu prioritatea maxima, adica root - ul.
+Metoda list1 este recursiva, pentru a parcurge tot arborele.
+
+Metoda list apeleaza metoda list1 si afiseaza tot arborele in preordine. 
+
+Metoda embark, imbarca in avion pasagerul cu prioritatea maxima. Astfel, root - ul devine ultimul pasager adaugat, si ultimul element devine null si numarul pasagerilor scade. Dupa asta se sorteaza vectorului in functie de MaxHeap.
+
+
+In clasa main am apelat metodele folosite in heap. 
+Initial am verificat daca fisierul de input exista, dupa am citit datele din fisierul de intrare, initializand vectorului de pasageri cu nr de pasageri. Intr un for, care parcurge fiecare pasager, am creat o instanta a clasei Singur, care este pasagerul de tip Singur.
+Dupa verific daca pasagerul este de tip singur, adica "s", si daca da adaug in vectorul meu de pasageri. Variabila curent retine cati pasageri am adaugat.
+Daca pasagerul este de tip grup. Verific daca a mai fost inainte de asta un grup de acest tip( prin contorul "gasit", ceea ce inseamna daca 1,a mai fost gasit si daca 0 , nu).Daca a mai fost, atunci adaug persoana respectiva in grupul potrivit ei, insa daca nu a fost gasit creez un grup nou si adaug persoana in grup si grupul adaug in vectorul de pasager.
+La fel si pentru familie.
+Dupa creez o instanta a clasei Heap. Intr un for calculez prioritatile pentru fiecare pasager.
+Intr un while apelez metodele. Citind fiecare comanda din fisier ii atribui metoda respectiva lui.Astfel, la embark apelez metoda embark, la insert citesc nu doar comada dar si urmatorul string(adica id-ul), intr un for parcurgand fiecare pasager verifica daca id-ul pasagerul coincide cu id-ul din comanda, atunci retin pasagerul dat in variabila p de tip Pasager si apelez metoda insert. La comanda list, apelez metoda list.
+La sfarsit inchid toate fisierele.
